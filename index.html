@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .note { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Portfolio</h1>
+    <div id="notes">
+        <h2>Notes</h2>
+        <div id="note-area"></div>
+        <input type="text" id="note-input" placeholder="Add a note..." />
+        <button id="add-note">Add Note</button>
+    </div>
+
+    <button id="generate-pdf">Generate PDF</button>
+
+    <script>
+        $(document).ready(function() {
+            $('#add-note').on('click', function() {
+                const note = $('#note-input').val();
+                if (note) {
+                    $('#note-area').append(`<div class='note'>${note}</div>`);
+                    $('#note-input').val('');
+                }
+            });
+
+            $('#generate-pdf').on('click', function() {
+                const notes = $('#note-area').html();
+                const pdfWindow = window.open('', '', 'width=800,height=600');
+                pdfWindow.document.write('<html><head><title>Notes PDF</title></head><body>');
+                pdfWindow.document.write('<h1>Notes</h1>');
+                pdfWindow.document.write(notes);
+                pdfWindow.document.write('</body></html>');
+                pdfWindow.document.close();
+                pdfWindow.print();
+            });
+        });
+    </script>
+</body>
+</html>
